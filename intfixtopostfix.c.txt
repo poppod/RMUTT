@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include<conio.h>
+#include<ctype.h>
+#include<stdlib.h>
+#define SIZE 50
+char s[SIZE];
+int top = 0;
+void push(char oper);
+char pop();
+int priority(char oper);
+void display(char ch, char postfix[50]);
+
+int main() {
+	char infx[50], postfix[50], ch;
+	int i = 0,j, k = 0;
+//	clrscr();
+	for (j = -1; j <= 50; j++)
+		postfix[j] = '\0';
+	printf("\n\nInfix Expression : ");
+	scanf_s("%s", infx);
+	while ((ch = infx[i++]) != '\0')
+	{
+		if (isalnum(ch)) {
+			postfix[k++] = ch;
+		}
+		else if (ch = '(')
+		{
+
+			s[top] = ch;
+			top++;
+		}
+		else if (ch = ')')
+		{
+			while (s[top] != '(')
+			{
+				postfix[k++] = s[top];
+				s[top]=0;
+				top--;
+			}
+			s[top]=0;
+		}
+		else if (priority(ch) >= priority(top)) {
+			push(ch);
+		}
+		else {
+		
+		postfix[k++] = s[top];	
+		pop();
+		top--;
+			//push(ch);
+		}
+	
+	}
+	while (top!=-1)
+	{
+		pop();
+		postfix[k++] = s[top];
+		top--;
+	}
+		printf("Outout:\n");
+		printf("Infix      stack      Postfix\n");
+			printf("%s      %s      %s", infx, s, postfix);
+	return 0;
+}
+
+void push(char oper)
+{
+	s[top] = oper;
+	top++;
+}
+
+char pop()
+{   
+
+	s[top] = 0;
+	return 0;
+}
+
+int priority(char oper)
+{
+	int n = 0;
+	switch (oper)
+	{
+	case'*' : n=3; break;
+	case'/' : n = 3; break;
+	case'+' : n = 2; break;
+	case'-' : n = 2; break;
+	default:return 0; break;
+	}
+	return n;
+}
+
+
+
